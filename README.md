@@ -1,5 +1,37 @@
-# Vue 3 + Vite
+Как использовать компонент Modal:
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+1. Импортируйте компонент в файл, где вы хотите его использовать:
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+   import Modal from "./components/Modal.vue";
+
+2. Определите состояние модального окна и контент, который будет передаваться в него:
+
+   import { ref } from 'vue';
+
+   const isModalOpen = ref(false);
+   const content = ref([
+       { id: 1, text: 'Не подходит дата или время' },
+       { id: 2, text: 'Не подходит тоннаж груза' }
+   ]);
+
+   const openModal = () => {
+       isModalOpen.value = true;
+   };
+
+   const closeModal = () => {
+       isModalOpen.value = false;
+   };
+   
+
+3. Добавьте компонент Modal в шаблон и передайте необходимые пропсы:
+
+   <template>
+       <button @click="openModal">Открыть модальное окно</button>
+
+       <Modal
+           :isOpen="isModalOpen"
+           :onClose="closeModal"
+           title="Расскажите, почему отказались от выполнения заказа?"
+           :content="content"
+       />
+   </template>
